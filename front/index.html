@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Admin Bulk Service</title>
+
+		<!-- Bootstrap -->
+		<link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+		<style type="text/css">
+			.login { margin-top: 100px; }
+			.search { margin-top: 20px; }
+			.table { margin-top: 20px; }
+			.table th:nth-child(5), .table td:nth-child(5) { width: 40%; }
+			.table th:last-child, .table td:last-child { width: 100px; }
+			.currentBal { border-bottom: 1px solid #ddd; }
+			.newPay { border-top: 1px solid #ddd; padding-top: 10px; }
+            .alert { position: absolute; z-index: 99; }
+            .input-group-btn select { min-width: 160px; border-right: 0 !important; border-radius: 4px 0 0 4px !important; }
+            .editServiceEmail { margin-top: 17px; }
+            #editService .form-group:nth-child(odd) { clear: both; }
+		</style>
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+        <!--base href="/"-->
+
+	</head>
+	<body ng-app="App">
+		
+		<div class="container" ng-view></div>
+
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+
+		<script src="libs/angular/angular.js"></script>
+		<script src="libs/angular/route.min.js"></script>
+
+		<script src="js/app.js"></script>
+		<script src="js/routes.js"></script>
+		<script src="js/modules.js"></script>
+		<script src="js/filters.js"></script>
+		<script src="js/services.js"></script>
+		<script src="js/controllers.js"></script>
+	</body>
+</html>

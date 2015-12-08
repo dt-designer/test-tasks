@@ -1,0 +1,215 @@
+            <div class="alert alert-success alert-dismissable" ng-show="successMessage">
+                <button type="button" class="close" ng-click="messageClose()">&times;</button>
+                {{successMessageText}}
+            </div>
+
+            <div class="alert alert-warning alert-dismissable" ng-show="errorMessage">
+                <button type="button" class="close" ng-click="messageClose()">&times;</button>
+                {{errorMessageText}}
+            </div>
+
+            <div class="row header">
+  				<div class="col-md-12">
+					<nav class="navbar navbar-default" role="navigation">
+						<div class="container-fluid">
+							<div class="navbar-header">
+								<a class="navbar-brand" href="#">Admin Service</a>
+							</div>
+							<div class="collapse navbar-collapse" id="navbar-collapse">
+								<button type="button" class="btn btn-default navbar-btn navbar-right" ng-click="logout()">Выход</button>
+							</div>
+						</div>
+					</nav>
+				</div>
+			</div>
+
+			<h3 class="text-info">Редактирование сервисов</h3>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Добавить новый сервис</h3>
+						</div>
+						<div class="panel-body">
+							<form class="form-horizontal" id="addService" name="addService" ng-submit="addNewService()">
+								<div class="form-group">
+									<div class="col-sm-4">
+										<input type="number" class="form-control" name="addServiceIdp" id="addServiceIdp" ng-model="addServiceIdp" placeholder="IDP" />
+									</div>
+									<div class="col-sm-5">
+										<input type="text" class="form-control" name="addServiceLogin" id="addServiceLogin" ng-model="addServiceLogin" placeholder="Login" />
+									</div>
+									<button type="submit" class="btn btn-success col-sm-2">Создать</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Удалить сервис</h3>
+						</div>
+						<div class="panel-body">
+                            <form class="form-horizontal" action="" method="POST" role="form" id="removeService" name="removeService" ng-submit="removeServices()" onsubmit="return false">
+								<div class="form-group">
+									<label for="removeServiceId" class="col-sm-2 control-label">ID</label>
+									<div class="col-sm-7">
+										<select class="form-control" name="removeServiceId" id="removeServiceId" ng-model="removeServiceId">
+											<option ng-repeat="item in serviceList" value="{{item.id}}">{{item.id}}</option>
+										</select>
+									</div>
+									<button type="submit" class="btn btn-danger col-sm-2">Удалить</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row search">
+				<div class="col-lg-6">
+					<div class="input-group">
+						<span class="input-group-btn">
+                            <select class="form-control" name="searchMethod" id="searchMethod" ng-model="searchMethod">
+                                <option value="id">Искать по ID</option>
+                                <option value="login">Искать по Login</option>
+                                <option value="idp">Искать по IDP</option>
+                            </select>
+						</span>
+						<input type="text" class="form-control" name="searchWord" id="searchWord" ng-model="searchWord" placeholder="Поиск" />
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Login</th>
+						<th>IDP</th>
+						<th>Баланс</th>
+						<th>Email для технической поддержки</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in serviceList | search: { 'method': searchMethod, 'word': searchWord }">
+						<td>{{item.id}}</td>
+						<td>{{item.login}}</td>
+						<td>{{item.idp}}</td>
+						<td>{{item.balance}}</td>
+						<td>{{item.email}}</td>
+						<td><button class="btn btn-primary btn-xs" ng-click="openPopUP(item.id)">Редактировать</button></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closePopUp">&times;</button>
+							<h4 class="modal-title">Редактирование записи</h4>
+						</div>
+						<div class="modal-body">
+
+                            <div class="preloader text-center" ng-hide="serviceDataTrue">Loading...</div>
+							<div class="container-fluid" ng-show="serviceDataTrue">
+								<div class="row">
+                                    <form action="" method="POST" role="form" id="editService" name="editService" ng-submit="editServices()" onsubmit="return false">
+										<div class="form-group col-sm-6">
+											<label for="editServiceLogin">Login</label>
+											<input type="text" class="form-control" name="editServiceLogin" id="editServiceLogin" ng-model="editServiceLogin" value="" placeholder="Login" />
+										</div>
+										<div class="form-group col-sm-6">
+											<label for="editServiceRateType">Тип рассчета курса</label>
+											<select class="form-control" name="editServiceRateType" id="editServiceRateType" ng-model="editServiceRateType">
+												<option value="1" ng-selected="service.rate == 1">Ежедневный</option>
+												<option value="2" ng-selected="service.rate == 2">Еженедельный</option>
+											</select>
+										</div>
+										<div class="form-group col-sm-6">
+											<label for="editServicePartnerIDP">IDP партнера</label>
+											<input type="text" class="form-control" name="editServicePartnerIDP" id="editServicePartnerIDP" ng-model="editServicePartnerIDP"  placeholder="" value="" disabled />
+										</div>
+										<div class="form-group col-sm-6">
+											<label for="editServiceRateBank">Банк у которого берутся курсы</label>
+											<select class="form-control" name="editServiceRateBank" id="editServiceRateBank" ng-model="editServiceRateBank">
+												<option value="123" ng-selected="service.bank == '123'">123</option>
+												<option value="cbrf" ng-selected="service.bank == 'cbrf'">CBRF</option>
+											</select>
+										</div>
+										<div class="form-group col-sm-6">
+											<label for="editServiceDLRmethod">Метод получения DLR</label>
+											<select class="form-control" name="editServiceDLRmethod" id="editServiceDLRmethod" ng-model="editServiceDLRmethod">
+												<option value="get" ng-selected="service.dlr == 'get'">GET</option>
+												<option value="post" ng-selected="service.dlr == 'post'">POST</option>
+											</select>
+										</div>
+										<div class="form-group col-sm-6">
+											<label for="editServiceNotification">Минимальный баланс для уведомления</label>
+											<input type="text" class="form-control" name="editServiceNotification" id="editServiceNotification" ng-model="editServiceNotification"  placeholder="" value="" />
+										</div>
+										<div class="form-group col-sm-6">
+											<label for="editServiceDirDataSet">Набор данных в dir</label>
+											<select class="form-control" name="editServiceDirDataSet" id="editServiceDirDataSet" ng-model="editServiceDirDataSet">
+												<option value="smpp" ng-selected="service.dir == 'smpp'">smpp</option>
+											</select>
+
+                                            <label for="editServiceNotification" class="editServiceEmail">Email для технической поддержки</label>
+                                            <input type="text" class="form-control" name="editServiceEmail" id="editServiceEmail" ng-model="editServiceEmail"  placeholder="" value="" />
+										</div>
+										<div class="form-group col-sm-6">
+											<div class="row currentBal">
+												<p class="col-sm-5"><strong>Текущий баланс</strong></p>
+												<p class="col-sm-7">{{service.balance}}</p>
+											</div>
+											<div class="row">
+												<div class="col-sm-3"><strong>Дата</strong></div>
+												<div class="col-sm-3"><strong>Начисленно</strong></div>
+												<div class="col-sm-3"><strong>Валюта</strong></div>
+												<div class="col-sm-3"><strong>Коммент.</strong></div>
+											</div>
+											<div class="row" ng-if="service.lastPay">
+												<div class="col-sm-3">{{service.lastPay.date}}<br />{{service.lastPay.time}}</div>
+												<div class="col-sm-3">{{service.lastPay.sum}}</div>
+												<div class="col-sm-3">{{service.lastPay.course}}</div>
+												<div class="col-sm-3">{{service.lastPay.comment}}</div>
+											</div>
+											<div class="row newPay">
+												<div class="col-sm-3">-</div>
+												<div class="col-sm-3"><input type="number" class="form-control" name="editPaySum" id="editPaySum" ng-model="editPaySum" placeholder="" value="0" /></div>
+												<div class="col-sm-3">
+													<select class="form-control" name="editPayCourse" id="editPayCourse" ng-model="editPayCourse">
+ 														<option>RUB</option>
+														<option>USD</option>
+													</select>
+												</div>
+												<div class="col-sm-3"><input type="text" class="form-control" name="editPayComment" id="editPayComment" ng-model="editPayComment" placeholder="-" value="" /></div>
+											</div>
+										</div>
+										<div class="form-group col-sm-6">
+											<label for="editServiceSMSreport">URL для уведомления о статусе СМС</label>
+											<input type="text" class="form-control" name="editServiceSMSreport" id="editServiceSMSreport" ng-model="editServiceSMSreport" placeholder="" value="" />
+										</div>
+										<div class="form-group col-sm-6">
+											<label for="editServiceCredit">Кредитный лимит партнера</label>
+											<input type="text" class="form-control" name="editServiceCredit" id="editServiceCredit" ng-model="editServiceCredit" placeholder="" value="" />
+										</div>
+									</form>
+								</div>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="reset" class="btn btn-default" form="editService" ng-click="closePopUP" data-dismiss="modal">Закрыть</button>
+							<button type="submit" class="btn btn-success" form="editService">Сохранить изменения</button>
+						</div>
+					</div>
+				</div>
+			</div>

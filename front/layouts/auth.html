@@ -1,0 +1,22 @@
+			<div class="row login">
+				<div class="col-lg-4 col-lg-offset-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Вход в систему</h3>
+						</div>
+						<div class="panel-body">
+							<form action="" method="POST" role="form" id="auth" name="auth" ng-submit="submit()" onsubmit="return false">
+								<div class="form-group">
+									<label for="authLogin">Логин</label>
+									<input type="text" class="form-control" name="authLogin" id="authLogin" ng-model="authLogin" placeholder="Login">
+								</div>
+								<div class="form-group">
+									<label for="authPass">Пароль</label>
+									<input type="password" class="form-control" name="authPass" id="authPass" ng-model="authPass" placeholder="Password">
+								</div>
+								<button type="submit" class="btn btn-success pull-right">Войти</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
