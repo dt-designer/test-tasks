@@ -12,3 +12,5 @@
 
 <p>Настройка закончена.</p>
 <p>Чтоб посмотреть как работает front, обращаемся с браузера к пути <a href="http://task.dt-designer.ru/front/">http://ваш-домен/front/</a><br />Для доступа используем Login: <strong>admin</strong> Pass: <strong>12345</strong></p>
+
+<p>Рабочий пример можно посмотреть тут <a href="http://task.dt-designer.ru/front/">http://task.dt-designer.ru/front/</a></p>
